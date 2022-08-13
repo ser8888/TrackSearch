@@ -10,25 +10,22 @@ class MainViewController: UIViewController {
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var table: UITableView!
     
-    let networkManager = NetworkManager()
+    @IBOutlet weak var imageView: UIImageView!
+    
+
     var reply: Reply? = nil
+    var titleImage:String!
     
-  //  @IBOutlet weak var artistLabel: UILabel!
-     
-    
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        // Do any additional setup after loading the view.
-//    }
 
     
     @IBAction func searchButtonPressed() {
         guard let str = textField.text else { return }
         let searchString = str.replacingOccurrences(of: " ", with: "+")
         print(str, searchString)
-        let urlString = "https://itunes.apple.com/search?term=\(searchString)"
+        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
         print("URL \(urlString)")
-        networkManager.fetchRequest(urlString: urlString) { [weak self] result in
+       
+        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
             switch result {
             case .success(let reply):
                 reply.results.map{ track in
@@ -41,37 +38,33 @@ class MainViewController: UIViewController {
             }
         }
         
-//        NetworkManager.shared.fetchImage(from: course.imageUrl) { [weak self] result in
-//            switch result {
-//            case .success(let imageData):
-//                self?.courseImage.image = UIImage(data: imageData)
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
-        
     }
-        
-        
-        
-    }
+}
+
     
-
-
-
-
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         reply?.results.count ?? 1
+        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
+//        content.image = UIImage(named: "IMG_8827")
         content.text = reply?.results[indexPath.row].trackName
         content.secondaryText = reply?.results[indexPath.row].artistName
-        let title = reply?.results[indexPath.row].artworkUrl30
-        content.image = UIImage(named: title ?? "")
+ //       let title = reply?.results[indexPath.row].artworkUrl30
+//        content.image = UIImage(named: title ?? "")
+        NetworkManager.shared.fetchImage(from: reply?.results[indexPath.row].artworkUrl60) { [weak self] result in
+            switch result {
+            case .success(let imageData):
+                print("ПОЛУЧИЛИ КВРТИНКу")
+                content.image = UIImage(data: imageData)
+                self!.imageView.image = UIImage(data: imageData)
+            case .failure(let error):
+                print(error)
+            }
+        }
         cell.contentConfiguration = content
         return cell
     }
@@ -81,3 +74,4 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     }
      
 }
+
