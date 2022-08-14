@@ -11,7 +11,8 @@ class MainViewController: UIViewController {
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var imageView: UIImageView!
     
-    var reply: Reply? = nil
+    private var reply: Reply?
+    
         
     @IBAction func searchButtonPressed() {
         guard let str = textField.text else { return }
@@ -53,7 +54,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         NetworkManager.shared.fetchImage(from: reply?.results[indexPath.row].artworkUrl60) { [weak self] result in
             switch result {
             case .success(let imageData):
-                print("ПОЛУЧИЛИ КВРТИНКY")
+                print("ПОЛУЧИЛИ КВРТИНКу")
                 content.image = UIImage(data: imageData)
                 self!.imageView.image = UIImage(data: imageData)
             case .failure(let error):
