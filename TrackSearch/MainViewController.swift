@@ -12,7 +12,7 @@ class MainViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     
     private var reply: Reply?
-    
+    private var results: [Track] = []
         
     @IBAction func searchButtonPressed() {
         guard let str = textField.text else { return }
