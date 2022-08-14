@@ -9,10 +9,16 @@ class MainViewController: UIViewController {
         
     @IBOutlet weak var textField: UITextField!
     @IBOutlet weak var table: UITableView!
-    @IBOutlet weak var imageView: UIImageView!
     
-    private var reply: Reply?
+    @IBOutlet weak var numberOfTracksLabel: UILabel!
+    
+//    private var reply: Reply?
     private var results: [Track] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        textField.delegate = self
+    }
         
     @IBAction func searchButtonPressed() {
         guard let str = textField.text else { return }
@@ -24,11 +30,13 @@ class MainViewController: UIViewController {
         NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
             switch result {
             case .success(let reply):
-                reply.results.map{ track in
-                    print(track.trackName)
-                    self?.reply = reply
-                    self?.table.reloadData()
-                }
+                self?.results = reply.results
+                self?.table.reloadData()
+//                reply.results.map{ track in
+//                    print(track.trackName)
+//                    self?.reply = reply
+//                    self?.table.reloadData()
+//                }
             case .failure(let error):
                 print(error)
             }
@@ -40,28 +48,27 @@ class MainViewController: UIViewController {
     
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        reply?.results.count ?? 1
+        results.count
+        
         
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
         var content = cell.defaultContentConfiguration()
-//        content.image = UIImage(named: "IMG_8827")
-        content.text = reply?.results[indexPath.row].trackName
-        content.secondaryText = reply?.results[indexPath.row].artistName
- //       let title = reply?.results[indexPath.row].artworkUrl30
-//        content.image = UIImage(named: title ?? "")
-        NetworkManager.shared.fetchImage(from: reply?.results[indexPath.row].artworkUrl60) { [weak self] result in
+        
+        content.text = results[indexPath.row].trackName
+        content.secondaryText = results[indexPath.row].artistName
+
+        NetworkManager.shared.fetchImage(from: results[indexPath.row].artworkUrl60) { result in
             switch result {
             case .success(let imageData):
-                print("ПОЛУЧИЛИ КВРТИНКу")
+                print("ПОЛУЧИЛИ КAРТИНКУ")
                 content.image = UIImage(data: imageData)
-                self!.imageView.image = UIImage(data: imageData)
+                cell.contentConfiguration = content
             case .failure(let error):
                 print(error)
             }
         }
-        cell.contentConfiguration = content
         return cell
     }
     
@@ -71,3 +78,31 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
      
 }
 
+extension MainViewController: UITextFieldDelegate {
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        print(textField.text)
+        let str = textField.text ?? ""
+ //       guard let str = textField.text else { return }
+        let searchString = str.replacingOccurrences(of: " ", with: "+")
+        print(str, searchString)
+        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
+        print("URL \(urlString)")
+       
+        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
+            switch result {
+            case .success(let reply):
+                self?.results = reply.results
+                self?.table.reloadData()
+//                reply.results.map{ track in
+//                    print(track.trackName)
+//                    self?.reply = reply
+//                    self?.table.reloadData()
+//                }
+            case .failure(let error):
+                print(error)
+            }
+        }
+        return true
+    }
+}

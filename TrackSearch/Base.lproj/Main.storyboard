@@ -50,11 +50,11 @@
                                     <outlet property="delegate" destination="BYZ-38-t0r" id="Ppu-G3-Pxm"/>
                                 </connections>
                             </tableView>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter name/group" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mVg-ds-cLj">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter name/group" textAlignment="natural" minimumFontSize="17" clearButtonMode="whileEditing" translatesAutoresizingMaskIntoConstraints="NO" id="mVg-ds-cLj">
                                 <rect key="frame" x="30" y="118" width="354" height="34"/>
                                 <color key="textColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="16"/>
-                                <textInputTraits key="textInputTraits"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" enablesReturnKeyAutomatically="YES"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="c0Z-d2-vJf">
                                 <rect key="frame" x="30" y="172" width="354" height="43"/>
@@ -66,10 +66,6 @@
                                     <action selector="searchButtonPressed" destination="BYZ-38-t0r" eventType="touchUpInside" id="ZDu-Nd-2tq"/>
                                 </connections>
                             </button>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Rcs-yG-w98">
-                                <rect key="frame" x="326" y="223" width="68" height="64"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
@@ -89,7 +85,6 @@
                     </view>
                     <navigationItem key="navigationItem" id="wnj-ln-bQZ"/>
                     <connections>
-                        <outlet property="imageView" destination="Rcs-yG-w98" id="5mr-1g-MRW"/>
                         <outlet property="table" destination="uLs-ts-YgG" id="nKe-xT-dd3"/>
                         <outlet property="textField" destination="mVg-ds-cLj" id="jVZ-qJ-KoD"/>
                     </connections>
