@@ -59,7 +59,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         content.text = results[indexPath.row].trackName
         content.secondaryText = results[indexPath.row].artistName
 
-        NetworkManager.shared.fetchImage(from: results[indexPath.row].artworkUrl60) { result in
+        NetworkManager.shared.fetchImage(from: results[indexPath.row].artworkUrl100) { result in
             switch result {
             case .success(let imageData):
                 print("ПОЛУЧИЛИ КAРТИНКУ")
@@ -81,7 +81,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 extension MainViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print(textField.text)
+        print(textField.text!)
         let str = textField.text ?? ""
  //       guard let str = textField.text else { return }
         let searchString = str.replacingOccurrences(of: " ", with: "+")
