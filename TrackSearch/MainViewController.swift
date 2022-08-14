@@ -22,6 +22,10 @@ class MainViewController: UIViewController {
         
     @IBAction func searchButtonPressed() {
         guard let str = textField.text else { return }
+        searchInitiated(for: str)
+    }
+    
+    private func searchInitiated( for str:String ) {
         let searchString = str.replacingOccurrences(of: " ", with: "+")
         print(str, searchString)
         let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
@@ -43,9 +47,13 @@ class MainViewController: UIViewController {
         }
         
     }
+    
+    
+    
 }
 
-    
+//MARK: - DELEGATES
+
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         results.count
@@ -81,28 +89,32 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
 extension MainViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        print(textField.text!)
-        let str = textField.text ?? ""
- //       guard let str = textField.text else { return }
-        let searchString = str.replacingOccurrences(of: " ", with: "+")
-        print(str, searchString)
-        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
-        print("URL \(urlString)")
-       
-        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
-            switch result {
-            case .success(let reply):
-                self?.results = reply.results
-                self?.table.reloadData()
-//                reply.results.map{ track in
-//                    print(track.trackName)
-//                    self?.reply = reply
-//                    self?.table.reloadData()
-//                }
-            case .failure(let error):
-                print(error)
-            }
-        }
+//        print(textField.text!)
+        guard let str = textField.text else { return false }
+        searchInitiated(for: str)
         return true
     }
 }
+ //       guard let str = textField.text else { return }
+//        let searchString = str.replacingOccurrences(of: " ", with: "+")
+//        print(str, searchString)
+//        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
+//        print("URL \(urlString)")
+//
+//        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
+//            switch result {
+//            case .success(let reply):
+//                self?.results = reply.results
+//                self?.table.reloadData()
+////                reply.results.map{ track in
+////                    print(track.trackName)
+////                    self?.reply = reply
+////                    self?.table.reloadData()
+////                }
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
+//        return true
+//    }
+//}
