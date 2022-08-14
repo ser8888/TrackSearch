@@ -24,6 +24,7 @@ class NetworkManager {
         DispatchQueue.global().async {
             guard let imageData = try? Data(contentsOf: url) else {
                 completion(.failure(.noData))
+                print("noData")
                 return
             }
             DispatchQueue.main.async {
