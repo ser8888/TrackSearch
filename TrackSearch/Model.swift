@@ -14,10 +14,10 @@ struct Track: Decodable {
     
     let artistName: String
     let trackName: String
-    let trackCensoredName: String
+//    let trackCensoredName: String
     let artworkUrl60: String?
     let artworkUrl100: String?
-    let collectionPrice: Double
+//    let collectionPrice: Double
     
 }
 

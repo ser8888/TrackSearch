@@ -5,6 +5,8 @@
 //  Created by John Doe on 12/08/2022.
 //
 import UIKit
+import Alamofire
+
 class MainViewController: UIViewController {
         
     @IBOutlet weak var textField: UITextField!
@@ -14,6 +16,7 @@ class MainViewController: UIViewController {
     
 //    private var reply: Reply?
     private var results: [Track] = []
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,23 +31,61 @@ class MainViewController: UIViewController {
     private func searchInitiated( for str:String ) {
         let searchString = str.replacingOccurrences(of: " ", with: "+")
         print(str, searchString)
-        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
+        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=1"
         print("URL \(urlString)")
        
-        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
-            switch result {
-            case .success(let reply):
-                self?.results = reply.results
-                self?.table.reloadData()
-//                reply.results.map{ track in
-//                    print(track.trackName)
-//                    self?.reply = reply
-//                    self?.table.reloadData()
-//                }
-            case .failure(let error):
-                print(error)
+        AF.request(urlString)
+            .responseJSON { [weak self] dataResponse in
+            print(dataResponse)
+            guard let statusCode = dataResponse.response?.statusCode else { return }
+            if (200...299).contains(statusCode) {
+                guard let value = dataResponse.value else { return }
+                print("VALUE:", value)
+            } else {
+                guard let error = dataResponse.error else { return }
+                print("ERROR:", error)
             }
+                print("STATUS CODE:", statusCode)
+                switch dataResponse.result {
+                case .success(let value):
+//                    print(value)
+                    
+//  ВОТ ТУТ НАЧИНАЕТСЯ ЗАТЫК
+                    
+                    guard let trackData = value as? [String: Any]  else { return }
+                    print("TRACKDATA - ", trackData)
+                    for key in trackData.keys {
+  //                  let array = key["results"] as? [Track] ?? []
+                        let array = trackData.map {$0.value}
+                        print("ARRAY - ", array)
+
+                    for tracks in array {
+                        let track = Track(
+                            artistName: tracks["artistName"] as? String ?? "",
+                            trackName: tracks["trackName"] as? String ?? "" ,
+                            artworkUrl60: tracks["artworkUrl60"] as? String,
+                            artworkUrl100: tracks["artworkUrl100"] as? String
+                        )
+                        self?.results.append(track)
+                    }
+                }
+                self?.table.reloadData()
+
+                case .failure(let error):
+                    print(error)
+                }
         }
+        
+        
+//        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
+//            switch result {
+//            case .success(let reply):
+//                self?.results = reply.results
+//                self?.table.reloadData()
+//            case .failure(let error):
+//                print(error)
+//            }
+//        }
         
     }
     
