@@ -31,7 +31,7 @@ class MainViewController: UIViewController {
     private func searchInitiated( for str:String ) {
         let searchString = str.replacingOccurrences(of: " ", with: "+")
         print(str, searchString)
-        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=1"
+        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
         print("URL \(urlString)")
        
         AF.request(urlString)
@@ -48,28 +48,8 @@ class MainViewController: UIViewController {
                 print("STATUS CODE:", statusCode)
                 switch dataResponse.result {
                 case .success(let value):
-//                    print(value)
-                    
-//  ВОТ ТУТ НАЧИНАЕТСЯ ЗАТЫК
-                    
-                    guard let trackData = value as? [String: Any]  else { return }
-                    print("TRACKDATA - ", trackData)
-                    for key in trackData.keys {
-  //                  let array = key["results"] as? [Track] ?? []
-                        let array = trackData.map {$0.value}
-                        print("ARRAY - ", array)
-
-                    for tracks in array {
-                        let track = Track(
-                            artistName: tracks["artistName"] as? String ?? "",
-                            trackName: tracks["trackName"] as? String ?? "" ,
-                            artworkUrl60: tracks["artworkUrl60"] as? String,
-                            artworkUrl100: tracks["artworkUrl100"] as? String
-                        )
-                        self?.results.append(track)
-                    }
-                }
-                self?.table.reloadData()
+                    self?.results = Reply.getTracks(from: value)
+                    self?.table.reloadData()
 
                 case .failure(let error):
                     print(error)

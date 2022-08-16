@@ -8,6 +8,19 @@ struct Reply: Decodable {
     
     let resultCount: Int
     let results: [Track]
+    
+    static func getTracks(from value: Any) -> [Track] {
+        guard let reply = value as? [String: Any] else { return [] }
+        guard let results = reply["results"] as? [[String: Any]] else { return [] }
+        
+        return results.map { Track(
+            artistName: $0["artistName"] as? String ?? "",
+            trackName: $0["trackName"] as? String ?? "",
+            artworkUrl60: $0["artworkUrl60"] as? String,
+            artworkUrl100: $0["artworkUrl100"] as? String
+        ) }
+
+    }
 }
 
 struct Track: Decodable {
