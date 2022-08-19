@@ -16,8 +16,8 @@ class MainViewController: UIViewController {
     
 //    private var reply: Reply?
     private var results: [Track] = []
-    
-    
+//    var trackTitle: UIImage! = nil
+        
     override func viewDidLoad() {
         super.viewDidLoad()
         textField.delegate = self
@@ -63,6 +63,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
             case .success(let imageData):
                 print("ПОЛУЧИЛИ КAРТИНКУ")
                 content.image = UIImage(data: imageData)
+//                self.trackTitle = UIImage(data: imageData)
                 cell.contentConfiguration = content
             case .failure(let error):
                 print(error)
@@ -76,13 +77,15 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let track = results[indexPath.row]
-        performSegue(withIdentifier: "showDetails", sender: track)
+        performSegue(withIdentifier: "showDetails", sender: track )
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         guard let destination = segue.destination as? TrackDetailsViewController else { return }
-//        guard let indexPath = tableView.indexPathForSelectedRow else { return }
         destination.track = sender as? Track
+//        destination.trackTitleDetails = trackTitle
+        
+        
     }
     
 
