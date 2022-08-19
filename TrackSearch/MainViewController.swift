@@ -35,23 +35,18 @@ class MainViewController: UIViewController {
         print("URL \(urlString)")
        
         AF.request(urlString)
+            .validate()
             .responseJSON { [weak self] dataResponse in
-            print(dataResponse)
-            guard let statusCode = dataResponse.response?.statusCode else { return }
-            if (200...299).contains(statusCode) {
-                guard let value = dataResponse.value else { return }
-                print("VALUE:", value)
-            } else {
-                guard let error = dataResponse.error else { return }
-                print("ERROR:", error)
-            }
-                print("STATUS CODE:", statusCode)
                 switch dataResponse.result {
                 case .success(let value):
-                    self?.results = Reply.getTracks(from: value)
+                    self?.results = Track.getTracks(from: value)
                     self?.table.reloadData()
 
-                case .failure(let error):
+//                    guard let value = value as? [String: Any] else { return }
+//                    guard let results = value["results"] as? [[String: Any]] else { return }
+//                    for track in value {
+//                    self?.results = Track(value: results)
+                                   case .failure(let error):
                     print(error)
                 }
         }
