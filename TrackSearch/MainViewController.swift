@@ -74,6 +74,17 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         80
     }
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let track = results[indexPath.row]
+        performSegue(withIdentifier: "showDetails", sender: track)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let destination = segue.destination as? TrackDetailsViewController else { return }
+//        guard let indexPath = tableView.indexPathForSelectedRow else { return }
+        destination.track = sender as? Track
+    }
+    
 
 }
 

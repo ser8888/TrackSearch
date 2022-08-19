@@ -87,6 +87,7 @@
                     <connections>
                         <outlet property="table" destination="uLs-ts-YgG" id="nKe-xT-dd3"/>
                         <outlet property="textField" destination="mVg-ds-cLj" id="jVZ-qJ-KoD"/>
+                        <segue destination="gao-Kf-P8E" kind="show" identifier="showDetails" id="ZXN-ag-9qX"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -110,6 +111,51 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="5hk-4e-HbV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-868" y="70"/>
+        </scene>
+        <!--Track Details View Controller-->
+        <scene sceneID="7RT-Lz-Cxw">
+            <objects>
+                <viewController id="gao-Kf-P8E" customClass="TrackDetailsViewController" customModule="TrackSearch" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V5b-Kp-k54">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="12" translatesAutoresizingMaskIntoConstraints="NO" id="Dnw-4S-oyF">
+                                <rect key="frame" x="40" y="178" width="334" height="375"/>
+                                <subviews>
+                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oyZ-So-y2Q">
+                                        <rect key="frame" x="0.0" y="0.0" width="334" height="342.5"/>
+                                    </imageView>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="93g-z3-PyO">
+                                        <rect key="frame" x="0.0" y="354.5" width="334" height="20.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <nil key="textColor"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="375" id="9MX-5W-9gX"/>
+                                    <constraint firstItem="93g-z3-PyO" firstAttribute="width" secondItem="oyZ-So-y2Q" secondAttribute="width" id="qKf-ql-XnG"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="eVS-pK-QGR"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="eVS-pK-QGR" firstAttribute="trailing" secondItem="Dnw-4S-oyF" secondAttribute="trailing" constant="40" id="F1W-pq-dat"/>
+                            <constraint firstItem="Dnw-4S-oyF" firstAttribute="top" secondItem="eVS-pK-QGR" secondAttribute="top" constant="90" id="Vem-Cc-vA3"/>
+                            <constraint firstItem="Dnw-4S-oyF" firstAttribute="leading" secondItem="eVS-pK-QGR" secondAttribute="leading" constant="40" id="rWC-cy-2zs"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" id="c7e-BP-wR0"/>
+                    <connections>
+                        <outlet property="imageViewTrack" destination="oyZ-So-y2Q" id="pMC-yv-0dK"/>
+                        <outlet property="trackLabel" destination="93g-z3-PyO" id="ULZ-Tv-TIc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="wSl-0b-AVJ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="669.56521739130437" y="69.642857142857139"/>
         </scene>
     </scenes>
     <resources>

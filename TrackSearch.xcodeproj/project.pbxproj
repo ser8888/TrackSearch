@@ -10,6 +10,7 @@
 		7F6D644228A991E20063AF34 /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = 7F6D644128A991E20063AF34 /* Alamofire */; };
 		7F6E873C28A70702002F0DF2 /* Model.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6E873B28A70702002F0DF2 /* Model.swift */; };
 		7F6E873E28A70734002F0DF2 /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F6E873D28A70734002F0DF2 /* NetworkManager.swift */; };
+		7F7F8D0C28AFF58500581479 /* TrackDetalsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F7F8D0B28AFF58500581479 /* TrackDetalsViewController.swift */; };
 		7F960F0D28A6C580002F913B /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F960F0C28A6C580002F913B /* AppDelegate.swift */; };
 		7F960F0F28A6C580002F913B /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F960F0E28A6C580002F913B /* SceneDelegate.swift */; };
 		7F960F1128A6C580002F913B /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7F960F1028A6C580002F913B /* MainViewController.swift */; };
@@ -21,6 +22,7 @@
 /* Begin PBXFileReference section */
 		7F6E873B28A70702002F0DF2 /* Model.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Model.swift; sourceTree = "<group>"; };
 		7F6E873D28A70734002F0DF2 /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
+		7F7F8D0B28AFF58500581479 /* TrackDetalsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TrackDetalsViewController.swift; sourceTree = "<group>"; };
 		7F960F0928A6C580002F913B /* TrackSearch.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TrackSearch.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7F960F0C28A6C580002F913B /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		7F960F0E28A6C580002F913B /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -65,6 +67,7 @@
 				7F960F0C28A6C580002F913B /* AppDelegate.swift */,
 				7F960F0E28A6C580002F913B /* SceneDelegate.swift */,
 				7F960F1028A6C580002F913B /* MainViewController.swift */,
+				7F7F8D0B28AFF58500581479 /* TrackDetalsViewController.swift */,
 				7F960F1228A6C580002F913B /* Main.storyboard */,
 				7F960F1528A6C581002F913B /* Assets.xcassets */,
 				7F960F1728A6C581002F913B /* LaunchScreen.storyboard */,
@@ -156,6 +159,7 @@
 				7F960F0D28A6C580002F913B /* AppDelegate.swift in Sources */,
 				7F6E873E28A70734002F0DF2 /* NetworkManager.swift in Sources */,
 				7F960F0F28A6C580002F913B /* SceneDelegate.swift in Sources */,
+				7F7F8D0C28AFF58500581479 /* TrackDetalsViewController.swift in Sources */,
 				7F6E873C28A70702002F0DF2 /* Model.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
