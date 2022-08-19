@@ -58,7 +58,7 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         content.text = results[indexPath.row].trackName
         content.secondaryText = results[indexPath.row].artistName
 
-        NetworkManager.shared.fetchImage(from: results[indexPath.row].artworkUrl100) { result in
+        NetworkManager.shared.fetchImage(from: results[indexPath.row].artworkUrl100 ?? "") { result in
             switch result {
             case .success(let imageData):
                 print("ПОЛУЧИЛИ КAРТИНКУ")
@@ -73,6 +73,8 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
+    
+
 }
 
 extension MainViewController: UITextFieldDelegate {

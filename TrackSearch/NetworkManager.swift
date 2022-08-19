@@ -6,6 +6,7 @@
 //
 import Foundation
 import Alamofire
+
 enum NetworkError: Error {
     case invalidURL
     case noData
@@ -16,21 +17,17 @@ class NetworkManager {
     static let shared = NetworkManager()
     private init() {}
     
-    func fetchImage(from url: String?, completion: @escaping(Result<Data, NetworkError>) -> Void) {
-        guard let url = URL(string: url ?? "") else {
-            completion(.failure(.invalidURL))
-            return
-        }
-        DispatchQueue.global().async {
-            guard let imageData = try? Data(contentsOf: url) else {
-                completion(.failure(.noData))
-                print("noData")
-                return
+    func fetchImage(from url: String, completion: @escaping(Result<Data, AFError>) -> Void) {
+        AF.request(url)
+            .validate()
+            .responseData { dataRequest in    // в dataRequest находится ответ от сервера
+                switch dataRequest.result {
+                case .success(let data):   // в дата находиться изображение
+                    completion(.success(data))
+                case .failure(let error):
+                    completion(.failure(error))
+                }
             }
-            DispatchQueue.main.async {
-                completion(.success(imageData))
-            }
-        }
     }
     func fetchRequest(urlString: String,completion: @escaping (Result<[Track], Error> ) -> Void) {
         AF.request(urlString)
@@ -45,4 +42,21 @@ class NetworkManager {
                 }
             }
     }
+    //MARK: - PostRequests
+    func sendPostRequest(to url: String, with data: Track, completion: @escaping(Result<Track, AFError>) -> Void) {
+        AF.request(url, method: .post, parameters: data)
+            .validate()
+            .responseDecodable(of: Track.self) { dataResponse in
+                switch dataResponse.result {
+                case .success(let track):
+                    completion( .success(track))
+                case .failure(let error):
+                    completion( .failure(error))
+                }
+                
+                
+            }
+        
+    }
 }
+

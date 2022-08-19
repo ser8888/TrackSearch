@@ -4,6 +4,7 @@
 //
 //  Created by John Doe on 13/08/2022.
 //
+import Foundation
 struct Reply: Decodable {
 
     let resultCount: Int
@@ -24,7 +25,7 @@ struct Reply: Decodable {
 //    }
 //}
 
-struct Track: Decodable {
+struct Track: Codable {
     
     let artistName: String
     let trackName: String
