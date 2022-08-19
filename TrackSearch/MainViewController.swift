@@ -33,39 +33,16 @@ class MainViewController: UIViewController {
         print(str, searchString)
         let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
         print("URL \(urlString)")
-       
-        AF.request(urlString)
-            .validate()
-            .responseJSON { [weak self] dataResponse in
-                switch dataResponse.result {
-                case .success(let value):
-                    self?.results = Track.getTracks(from: value)
-                    self?.table.reloadData()
-
-//                    guard let value = value as? [String: Any] else { return }
-//                    guard let results = value["results"] as? [[String: Any]] else { return }
-//                    for track in value {
-//                    self?.results = Track(value: results)
-                                   case .failure(let error):
-                    print(error)
-                }
+        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] results in
+            switch results {
+            case .success(let results):
+                self?.results = results
+                self?.table.reloadData()
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
-        
-        
-//        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
-//            switch result {
-//            case .success(let reply):
-//                self?.results = reply.results
-//                self?.table.reloadData()
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-        
     }
-    
-    
-    
 }
 
 //MARK: - DELEGATES
@@ -73,8 +50,6 @@ class MainViewController: UIViewController {
 extension MainViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         results.count
-        
-        
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
@@ -95,42 +70,16 @@ extension MainViewController: UITableViewDataSource, UITableViewDelegate {
         }
         return cell
     }
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         80
     }
-     
 }
 
 extension MainViewController: UITextFieldDelegate {
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        print(textField.text!)
         guard let str = textField.text else { return false }
         searchInitiated(for: str)
         return true
     }
 }
- //       guard let str = textField.text else { return }
-//        let searchString = str.replacingOccurrences(of: " ", with: "+")
-//        print(str, searchString)
-//        let urlString = "https://itunes.apple.com/search?term=\(searchString)&limit=5"
-//        print("URL \(urlString)")
-//
-//        NetworkManager.shared.fetchRequest(urlString: urlString) { [weak self] result in
-//            switch result {
-//            case .success(let reply):
-//                self?.results = reply.results
-//                self?.table.reloadData()
-////                reply.results.map{ track in
-////                    print(track.trackName)
-////                    self?.reply = reply
-////                    self?.table.reloadData()
-////                }
-//            case .failure(let error):
-//                print(error)
-//            }
-//        }
-//        return true
-//    }
-//}
